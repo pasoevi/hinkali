@@ -36,6 +36,17 @@ class HinkaliApi(remote.Service):
     def dishes_list(self, request):
         return STORED_DISHES
 
+    ADD_METHOD_RESOURCE = endpoints.ResourceContainer(
+        Dish,
+        dish_name=messages.StringField(1, required=True))
+
+    @endpoints.method(ADD_METHOD_RESOURCE, Dish,
+                      path='hinkali/{dish_name}', http_method='POST',
+                      name='dishes.addDish')
+    def add_dish(self, request):
+        return Dish(name=request.dish_name)
+
+    
     ID_RESOURCE = endpoints.ResourceContainer(
         message_types.VoidMessage,
         id=messages.IntegerField(1, variant=messages.Variant.INT32))
@@ -43,7 +54,7 @@ class HinkaliApi(remote.Service):
     @endpoints.method(ID_RESOURCE, Dish,
                       path='hinkali/{id}', http_method='GET',
                       name='dishes.getDish')
-    def get_greeting(self, request):
+    def get_dish(self, request):
         try:
             return STORED_DISHES.items[request.id]
         except(IndexError, TypeError):
