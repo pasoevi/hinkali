@@ -1,0 +1,13 @@
+<select {{ sel_attrs }}>
+    {% for item in items %}
+        {% if selected == item.name %}
+            <option selected="selected">
+                {% else %}
+            <option>
+        {% endif %}
+    {{ item.name }}
+
+
+    </option>
+    {% endfor %}
+</select>
