@@ -4,26 +4,29 @@ Google Cloud Endpoints implementation of the api.
 Defined here are the ProtoRPC messages needed to define Schemas for methods
 as well as those methods defined in an API.
 """
+
 import endpoints
 from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
 
-from domain.models import restaurant
 
 package = "Hinkali"
 
 class Dish(messages.Message):
     name = messages.StringField(1)
+
     
 class DishCollection(messages.Message):
-    items = MessageField(Dish, 1, repeated=True)
+    items = messages.MessageField(Dish, 1, repeated=True)
+
 
 STORED_DISHES = DishCollection(items=[
     Dish(name='Khinkali'),
-    Dish(name='Khachapuri')])
+    Dish(name='Khachapuri'),
+])
 
-@endpoints.api(name='Hinkali', version='v1')
+@endpoints.api(name='hinkali', version='v1')
 class HinkaliApi(remote.Service):
     """Hinkali API v1."""
 
@@ -42,9 +45,9 @@ class HinkaliApi(remote.Service):
                       name='dishes.getDish')
     def get_greeting(self, request):
         try:
-            retun STORED_DISHES.items[request.id]
+            return STORED_DISHES.items[request.id]
         except(IndexError, TypeError):
-            raise endpoints.NotFoundException('Dish {1} not found.'.format(request.id))
+            raise endpoints.NotFoundException('Dish {1} not found.'.format(request.id,))
         
                       
     

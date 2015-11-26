@@ -20,12 +20,12 @@ handlers:
   static_dir: static/fonts
 - url: /static
   static_dir: web/static
-
+  # Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
+- url: /_ah/spi/.*
+  script: hink_api.APPLICATION
 - url: .*
   script: main.app
-# Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
-- url: /_ah/spi/.*
-  script: helloworld_api.APPLICATION
+
 
 libraries:
 - name: webapp2
