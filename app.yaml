@@ -4,6 +4,8 @@ runtime: python27
 api_version: 1
 threadsafe: yes
 
+
+
 handlers:
 - url: /favicon\.ico
   static_files: web/static/favicon.ico
@@ -21,6 +23,9 @@ handlers:
 
 - url: .*
   script: main.app
+# Endpoints handler: Must be /_ah/spi. Apps send requests to /_ah/api, but these are handled at /_ah/spi!!
+- url: /_ah/spi/.*
+  script: helloworld_api.APPLICATION
 
 libraries:
 - name: webapp2

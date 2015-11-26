@@ -24,11 +24,11 @@
     </tr>
     </thead>
     <tbody>
-    {% for organisation in organisations %}
+    {% for restaurant in restaurants %}
         <tr>
-            <td>{{ organisation.name }}</td>
-            <td>{{ organisation.address.street }}</td>
-            <td>{{ organisation.numViews }}</td>
+            <td>{{ restaurant.name }}</td>
+            <td>{{ restaurant.address.street }}</td>
+            <td>{{ restaurant.numViews }}</td>
         </tr>
     {% endfor %}
     </tbody>
@@ -36,7 +36,7 @@
 <form action="/add?catalog_name={{ catalog_name }}" method="post">
     <div class="form-group">
         <label for="titleInput">Title</label>
-        <input class="form-control" placeholder="Enter organisation name" type="text" name="title" id="titleInput"
+        <input class="form-control" placeholder="Enter restaurant name" type="text" name="title" id="titleInput"
                rows="1" cols="60"/>
     </div>
     <div class="form-group">
