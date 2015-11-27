@@ -9,56 +9,50 @@ import endpoints
 from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
+from hink_api_messages import Food, FoodCollection
 
 
 package = "Hinkali"
 
-class Dish(messages.Message):
-    name = messages.StringField(1)
 
-    
-class DishCollection(messages.Message):
-    items = messages.MessageField(Dish, 1, repeated=True)
-
-
-STORED_DISHES = DishCollection(items=[
-    Dish(name='Khinkali'),
-    Dish(name='Khachapuri'),
+STORED_FOODS = FoodCollection(items=[
+    Food(name='Khinkali'),
+    Food(name='Khachapuri'),
 ])
 
 @endpoints.api(name='hinkali', version='v1')
 class HinkaliApi(remote.Service):
     """Hinkali API v1."""
 
-    @endpoints.method(message_types.VoidMessage, DishCollection,
+    @endpoints.method(message_types.VoidMessage, FoodCollection,
                       path='hinkali', http_method='GET',
-                      name='dishes.listDish')
-    def dishes_list(self, request):
-        return STORED_DISHES
+                      name='foods.listFood')
+    def foods_list(self, request):
+        return STORED_FOODS
 
     ADD_METHOD_RESOURCE = endpoints.ResourceContainer(
-        Dish,
-        dish_name=messages.StringField(1, required=True))
+        Food,
+        food_name=messages.StringField(1, required=True))
 
-    @endpoints.method(ADD_METHOD_RESOURCE, Dish,
-                      path='hinkali/{dish_name}', http_method='POST',
-                      name='dishes.addDish')
-    def add_dish(self, request):
-        return Dish(name=request.dish_name)
+    @endpoints.method(ADD_METHOD_RESOURCE, Food,
+                      path='hinkali/{food_name}', http_method='POST',
+                      name='foods.addFood')
+    def add_food(self, request):
+        return Food(name=request.food_name)
 
     
     ID_RESOURCE = endpoints.ResourceContainer(
         message_types.VoidMessage,
         id=messages.IntegerField(1, variant=messages.Variant.INT32))
 
-    @endpoints.method(ID_RESOURCE, Dish,
+    @endpoints.method(ID_RESOURCE, Food,
                       path='hinkali/{id}', http_method='GET',
-                      name='dishes.getDish')
-    def get_dish(self, request):
+                      name='foods.getFood')
+    def get_food(self, request):
         try:
-            return STORED_DISHES.items[request.id]
+            return STORED_FOODS.items[request.id]
         except(IndexError, TypeError):
-            raise endpoints.NotFoundException('Dish {1} not found.'.format(request.id,))
+            raise endpoints.NotFoundException('Food {1} not found.'.format(request.id,))
         
                       
     

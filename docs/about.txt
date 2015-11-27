@@ -1,0 +1,22 @@
+3 Languages
+Food
+- ID
+- Name
+- Photos
+- Describe
+
+Places
+- ID
+- Name
+- Location
+- Photos
+- Address (text)
+- Phone
+- Cost (Cheap, Starndard, Expensive)
+
+FoodStops
+- ID
+- FoodID
+- PlaceID
+- Stars
+- Describe
