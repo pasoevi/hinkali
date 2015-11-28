@@ -4,7 +4,7 @@ class Food(messages.Message):
     name = messages.StringField(1)
     # photos = messages.BlobProperty(repeated=True)
     # places = messages.ListProperty(ndb.Key)
-    description = messages.StringProperty()
+    description = messages.StringField(2)
 
     
 class FoodCollection(messages.Message):
