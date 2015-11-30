@@ -1,4 +1,5 @@
 from google.appengine.ext import ndb
+
 import hink_api_messages 
 
 class Place(ndb.Model):
@@ -10,6 +11,40 @@ class Place(ndb.Model):
     phones = ndb.StringProperty(repeated=True)
     cost = ndb.StringProperty(
         choices=('Cheap', 'Standard', 'Expensive'))
+
+    def to_message(self):
+        """Turns the Food entity into a ProtoRPC object.
+        """
+        message = hink_api_messages.Place(name=self.name,
+                                          description=self.description)
+        message.locationLat = self.location.lat
+        message.locationLon = self.location.lon
+        for address in self.addresses:
+            message.addresses.add(address)
+        for phone in self.phones:
+            message.phones.add(phone)
+
+        message.cost = self.cost
+    
+        return message
+
+    @classmethod
+    def put_from_message(cls, message):
+        """Gets the current user and inserts a score.
+
+        Args:
+            message: A ScoreRequestMessage instance to be inserted.
+
+        Returns:
+            The Score entity that was inserted.
+        """
+        entity = Place(name=message.place_name)
+        entity.location = ndb.GeoPt(message.locationLat, message.locationLon)
+        
+        #for address in message.addresses:
+         #   entity.addresses.add(address)
+        entity.put()
+        return entity
 
 class Food(ndb.Model):
     name = ndb.StringProperty()
