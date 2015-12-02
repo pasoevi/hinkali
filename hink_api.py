@@ -20,18 +20,14 @@ class HinkaliApi(remote.Service):
     """Hinkali API v1."""
 
     @endpoints.method(message_types.VoidMessage, hink_api_messages.FoodCollection,
-                      path='hinkali', http_method='GET',
+                      path='foods', http_method='GET',
                       name='foods.listFood')
     def foods_list(self, request):
         items = [entity.to_message() for entity in models.Food.query()]
         return hink_api_messages.FoodCollection(items=items)
 
-    ADD_METHOD_RESOURCE = endpoints.ResourceContainer(
-        hink_api_messages.Food,
-        food_name=messages.StringField(1, required=True), description=messages.StringField(2, required=False))
-
     @endpoints.method(hink_api_messages.FoodRequest, hink_api_messages.Food,
-                      path='hinkali', http_method='POST',
+                      path='foods', http_method='POST',
                       name='foods.addFood')
     def add_food(self, request):
         entity = models.Food.put_from_message(request)
@@ -50,7 +46,7 @@ class HinkaliApi(remote.Service):
         id=messages.IntegerField(1, variant=messages.Variant.INT32))
 
     @endpoints.method(ID_RESOURCE, hink_api_messages.Food,
-                      path='hinkali/{id}', http_method='GET',
+                      path='foods/{id}', http_method='GET',
                       name='foods.getFood')
     def get_food(self, request):
         try:
