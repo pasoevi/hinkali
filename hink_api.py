@@ -14,10 +14,6 @@ import models
 
 package = "Hinkali"
 
-STORED_FOODS = hink_api_messages.FoodCollection(items=[
-    hink_api_messages.Food(name='Khinkali'),
-    hink_api_messages.Food(name='Khachapuri'),
-])
 
 @endpoints.api(name='hinkali', version='v1')
 class HinkaliApi(remote.Service):
@@ -53,7 +49,8 @@ class HinkaliApi(remote.Service):
                       name='foods.getFood')
     def get_food(self, request):
         try:
-            return STORED_FOODS.items[request.id]
+            food =  models.Food.query(models.Food.id==request.id)
+            return food.to_message()
         except(IndexError, TypeError):
             raise endpoints.NotFoundException('Food {1} not found.'.format(request.id,))
         

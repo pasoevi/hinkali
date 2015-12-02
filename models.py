@@ -6,9 +6,9 @@ class Place(ndb.Model):
     name = ndb.StringProperty()
     location = ndb.GeoPtProperty(indexed=False)
     photos = ndb.BlobProperty(repeated=True)
-    addresses = ndb.StringProperty(repeated=True)
+    address = ndb.StringProperty()
     description = ndb.StringProperty()
-    phones = ndb.StringProperty(repeated=True)
+    phone = ndb.StringProperty()
     cost = ndb.StringProperty(
         choices=('Cheap', 'Standard', 'Expensive'))
 
@@ -19,11 +19,10 @@ class Place(ndb.Model):
                                           description=self.description)
         message.locationLat = self.location.lat
         message.locationLon = self.location.lon
-        for address in self.addresses:
-            message.addresses.add(address)
-        for phone in self.phones:
-            message.phones.add(phone)
-
+        
+        message.addresses = self.address
+        message.description = self.description
+        message.phone = self.phone
         message.cost = self.cost
     
         return message
@@ -40,9 +39,11 @@ class Place(ndb.Model):
         """
         entity = Place(name=message.place_name)
         entity.location = ndb.GeoPt(message.locationLat, message.locationLon)
+        entity.address = message.address
+        entity.phone = message.phone
+        entity.description = message.description
+        entity.cost = message.cost
         
-        #for address in message.addresses:
-         #   entity.addresses.add(address)
         entity.put()
         return entity
 
@@ -55,8 +56,10 @@ class Food(ndb.Model):
     def to_message(self):
         """Turns the Food entity into a ProtoRPC object.
         """
-        return hink_api_messages.Food(name=self.name,
-                                      description=self.description)
+        message = hink_api_messages.Food(id=self.key.id())
+        message.name=self.name
+        message.description=self.description
+        return message
 
     @classmethod
     def put_from_message(cls, message):
