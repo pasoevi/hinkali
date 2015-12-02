@@ -1,5 +1,12 @@
 from protorpc import messages
 
+class FoodRequest(messages.Message):
+    name = messages.StringField(1)
+    description = messages.StringField(2)
+    place_id = messages.StringField(3)
+    stars = messages.IntegerField(4)
+
+
 class Food(messages.Message):
     id = messages.IntegerField(1)
     name = messages.StringField(2)

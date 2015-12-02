@@ -71,11 +71,12 @@ class Food(ndb.Model):
         Returns:
             The Score entity that was inserted.
         """
-        entity = Food(name=message.food_name)
+        entity = Food(name=message.name)
+        entity.description = message.description
         entity.put()
         return entity
     
-class FoodStops(ndb.Model):
+class FoodStop(ndb.Model):
     food = ndb.KeyProperty(Food,
                            required=True,
     ) # collection_name='foods'
