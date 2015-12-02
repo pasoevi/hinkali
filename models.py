@@ -15,12 +15,13 @@ class Place(ndb.Model):
     def to_message(self):
         """Turns the Food entity into a ProtoRPC object.
         """
-        message = hink_api_messages.Place(name=self.name,
-                                          description=self.description)
-        message.locationLat = self.location.lat
-        message.locationLon = self.location.lon
+        message = hink_api_messages.Place(id=self.key.id())
+        message.name=self.name
+        message.description=self.description
+        message.locationLat = str(self.location.lat)
+        message.locationLon = str(self.location.lon)
         
-        message.addresses = self.address
+        message.address = self.address
         message.description = self.description
         message.phone = self.phone
         message.cost = self.cost
@@ -37,7 +38,7 @@ class Place(ndb.Model):
         Returns:
             The Score entity that was inserted.
         """
-        entity = Place(name=message.place_name)
+        entity = Place(name=message.name)
         entity.location = ndb.GeoPt(message.locationLat, message.locationLon)
         entity.address = message.address
         entity.phone = message.phone

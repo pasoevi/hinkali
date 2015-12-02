@@ -19,7 +19,7 @@ class FoodCollection(messages.Message):
     items = messages.MessageField(Food, 1, repeated=True)
 
 
-class Place(messages.Message):
+class PlaceRequest(messages.Message):
     name = messages.StringField(1)
     locationLat = messages.StringField(2)
     locationLon = messages.StringField(3)
@@ -27,6 +27,16 @@ class Place(messages.Message):
     description = messages.StringField(5)
     phone = messages.StringField(6)
     cost = messages.StringField(7)
+
+class Place(messages.Message):
+    id = messages.IntegerField(1)
+    name = messages.StringField(2)
+    locationLat = messages.StringField(3)
+    locationLon = messages.StringField(4)
+    address = messages.StringField(5)
+    description = messages.StringField(6)
+    phone = messages.StringField(7)
+    cost = messages.StringField(8)
 
 
 class PlaceCollection(messages.Message):
