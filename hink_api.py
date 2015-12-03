@@ -33,16 +33,15 @@ class HinkaliApi(remote.Service):
                       name='food.addFood')
     def add_food(self, request):
         food_entity = models.Food.put_from_message(request)
-        
-        place_entity =  models.Place.get_by_id(int(request.place_id))
-        pprint.pprint(place_entity)
-        food_stop = models.FoodStop(place=place_entity.key, food=food_entity.key)
-        food_stop.stars = request.stars
-        food_stop.put()
-
-        
         return food_entity.to_message()
 
+    @endpoints.method(hink_api_messages.FoodStopRequest, hink_api_messages.FoodStop,
+                      path='foodstop', http_method='POST',
+                      name='foodstop.addFoodStop')
+    def add_food_stop(self, request):
+        entity = models.FoodStop.put_from_message(request)
+        return entity.to_message()
+    
     
     ID_RESOURCE = endpoints.ResourceContainer(
         message_types.VoidMessage,
@@ -59,7 +58,7 @@ class HinkaliApi(remote.Service):
             raise endpoints.NotFoundException('Food {0} not found.'.format(request.id,))
 
     @endpoints.method(ID_RESOURCE, message_types.VoidMessage,
-                     path='food/{id}', http_method='POST',
+                     path='food/delete/{id}', http_method='POST',
                      name='food.deleteFood')
     def delete_food(self, request):
         try:
@@ -95,7 +94,7 @@ class HinkaliApi(remote.Service):
             raise endpoints.NotFoundException('Place {0} not found.'.format(request.id))
 
     @endpoints.method(ID_RESOURCE, message_types.VoidMessage,
-                     path='place/{id}', http_method='POST',
+                     path='place/delete/{id}', http_method='POST',
                      name='place.deletePlace')
     def delete_place(self, request):
         try:

@@ -1,9 +1,15 @@
 from protorpc import messages
 
+
 class FoodRequest(messages.Message):
     name = messages.StringField(1)
     description = messages.StringField(2)
-    place_id = messages.StringField(3)
+
+
+class FoodStopRequest(messages.Message):
+    place_id = messages.IntegerField(1)
+    food_id = messages.IntegerField(2)
+    description = messages.StringField(3)
     stars = messages.IntegerField(4)
 
 
@@ -28,6 +34,7 @@ class PlaceRequest(messages.Message):
     phone = messages.StringField(6)
     cost = messages.StringField(7)
 
+
 class Place(messages.Message):
     id = messages.IntegerField(1)
     name = messages.StringField(2)
@@ -41,3 +48,10 @@ class Place(messages.Message):
 
 class PlaceCollection(messages.Message):
     items = messages.MessageField(Place, 1, repeated=True)
+
+
+class FoodStop(messages.Message):
+    place = messages.MessageField(Place, 1)
+    food = messages.MessageField(Food, 2)
+    description = messages.StringField(3)
+    stars = messages.IntegerField(4)

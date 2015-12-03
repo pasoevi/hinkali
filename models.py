@@ -86,3 +86,35 @@ class FoodStop(ndb.Model):
     ) # collection_name='places'
     stars = ndb.IntegerProperty(choices=(1, 2, 3, 4, 5))
     description = ndb.StringProperty()
+
+    def to_message(self):
+        """turns the foodstop entity into a protorpc object.
+        """
+        place_entity = Place.get_by_id(self.place.id())
+        food_entity = Food.get_by_id(self.food.id())
+        
+        message = hink_api_messages.FoodStop()
+        message.place = place_entity.to_message()
+        message.food = food_entity.to_message()
+        message.description = self.description
+        message.stars = self.stars
+        return message
+
+    @classmethod
+    def put_from_message(cls, message):
+        """gets the current user and inserts a score.
+
+        args:
+            message: a scorerequestmessage instance to be inserted.
+
+        returns:
+            the score entity that was inserted.
+        """
+
+        food_entity = Food.get_by_id(message.food_id)
+        place_entity =  Place.get_by_id(message.place_id)
+        food_stop = FoodStop(place=place_entity.key, food=food_entity.key)
+        food_stop.stars = message.stars
+        food_stop.description = message.description
+        food_stop.put()
+        return food_stop
