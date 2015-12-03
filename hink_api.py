@@ -6,6 +6,7 @@ as well as those methods defined in an API.
 """
 
 import endpoints
+import pprint
 from protorpc import messages
 from protorpc import message_types
 from protorpc import remote
@@ -31,15 +32,16 @@ class HinkaliApi(remote.Service):
                       path='food', http_method='POST',
                       name='food.addFood')
     def add_food(self, request):
-        entity = models.Food.put_from_message(request)
-        """
-        food_stop = models.FoodStop(place=request.place_id, food=entity.key.id())
+        food_entity = models.Food.put_from_message(request)
+        
+        place_entity =  models.Place.get_by_id(int(request.place_id))
+        pprint.pprint(place_entity)
+        food_stop = models.FoodStop(place=place_entity.key, food=food_entity.key)
         food_stop.stars = request.stars
         food_stop.put()
-        """
-        # food = hink_api_messages.Food(name=request.food_name)
-        # food.put()
-        return entity.to_message()
+
+        
+        return food_entity.to_message()
 
     
     ID_RESOURCE = endpoints.ResourceContainer(
