@@ -58,6 +58,17 @@ class HinkaliApi(remote.Service):
         except(IndexError, TypeError):
             raise endpoints.NotFoundException('Food {1} not found.'.format(request.id,))
 
+    @endpoints.method(ID_RESOURCE, message_types.VoidMessage,
+                     path='food/{id}', http_method='POST',
+                     name='food.deleteFood')
+    def delete_food(self, request):
+        try:
+            food = models.Food.get_by_id(request.id)
+            food.key.delete()
+            return message_types.VoidMessage()
+        except(AttributeError):
+            raise endpoints.NotFoundException('Food {1} not found.'.format(request.id,))
+    
     @endpoints.method(message_types.VoidMessage,
                       hink_api_messages.PlaceCollection,
                       path='place', http_method='GET',
