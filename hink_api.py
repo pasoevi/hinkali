@@ -56,7 +56,7 @@ class HinkaliApi(remote.Service):
             food =  models.Food.get_by_id(request.id)
             return food.to_message()
         except(IndexError, TypeError):
-            raise endpoints.NotFoundException('Food {1} not found.'.format(request.id,))
+            raise endpoints.NotFoundException('Food {0} not found.'.format(request.id,))
 
     @endpoints.method(ID_RESOURCE, message_types.VoidMessage,
                      path='food/{id}', http_method='POST',
@@ -67,7 +67,7 @@ class HinkaliApi(remote.Service):
             food.key.delete()
             return message_types.VoidMessage()
         except(AttributeError):
-            raise endpoints.NotFoundException('Food {1} not found.'.format(request.id,))
+            raise endpoints.NotFoundException('Food {0} not found.'.format(request.id))
     
     @endpoints.method(message_types.VoidMessage,
                       hink_api_messages.PlaceCollection,
@@ -91,8 +91,8 @@ class HinkaliApi(remote.Service):
         try:
             place =  models.Place.get_by_id(request.id)
             return place.to_message()
-        except(IndexError, TypeError):
-            raise endpoints.NotFoundException('Place {1} not found.'.format(request.id,))
+        except(IndexError, TypeError, AttributeError):
+            raise endpoints.NotFoundException('Place {0} not found.'.format(request.id))
 
     @endpoints.method(ID_RESOURCE, message_types.VoidMessage,
                      path='place/{id}', http_method='POST',
@@ -103,7 +103,7 @@ class HinkaliApi(remote.Service):
             place.key.delete()
             return message_types.VoidMessage()
         except(AttributeError):
-            raise endpoints.NotFoundException('Place {1} not found.'.format(request.id,))
+            raise endpoints.NotFoundException('Place {0} not found.'.format(request.id))
                       
     
 APPLICATION = endpoints.api_server([HinkaliApi])
