@@ -97,8 +97,11 @@ class HinkaliApi(remote.Service):
                      path='place/delete/{id}', http_method='POST',
                      name='place.deletePlace')
     def delete_place(self, request):
+        
         try:
             place = models.Place.get_by_id(request.id)
+            foods = models.FoodStop.query(models.FoodStop.place==place.key)
+            [entity.key.delete() for entity in foods]
             place.key.delete()
             return message_types.VoidMessage()
         except(AttributeError):
