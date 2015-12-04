@@ -55,3 +55,7 @@ class FoodStop(messages.Message):
     food = messages.MessageField(Food, 2)
     description = messages.StringField(3)
     stars = messages.IntegerField(4)
+
+
+class FoodStopCollection(messages.Message):
+    items = messages.MessageField(FoodStop, 1, repeated=True)
