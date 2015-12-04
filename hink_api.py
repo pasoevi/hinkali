@@ -118,6 +118,17 @@ class HinkaliApi(remote.Service):
             return message_types.VoidMessage()
         except(AttributeError):
             raise endpoints.NotFoundException('Place {0} not found.'.format(request.id))
+
+    @endpoints.method(ID_RESOURCE, message_types.VoidMessage,
+                     path='place/food/delete/{id}', http_method='POST',
+                     name='food.deleteFoodStop')
+    def delete_foodstop(self, request):
+        try:
+            foodstop = models.FoodStop.get_by_id(request.id)
+            foodstop.key.delete()
+            return message_types.VoidMessage()
+        except(AttributeError):
+            raise endpoints.NotFoundException('FoodStop {0} not found.'.format(request.id))
                       
     
 APPLICATION = endpoints.api_server([HinkaliApi])

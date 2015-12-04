@@ -94,6 +94,7 @@ class FoodStop(ndb.Model):
         food_entity = Food.get_by_id(self.food.id())
         
         message = hink_api_messages.FoodStop()
+        message.id = self.key.id()
         message.place = place_entity.to_message()
         message.food = food_entity.to_message()
         message.description = self.description

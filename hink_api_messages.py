@@ -51,10 +51,11 @@ class PlaceCollection(messages.Message):
 
 
 class FoodStop(messages.Message):
-    place = messages.MessageField(Place, 1)
-    food = messages.MessageField(Food, 2)
-    description = messages.StringField(3)
-    stars = messages.IntegerField(4)
+    id = messages.IntegerField(1)
+    place = messages.MessageField(Place, 2)
+    food = messages.MessageField(Food, 3)
+    description = messages.StringField(4)
+    stars = messages.IntegerField(5)
 
 
 class FoodStopCollection(messages.Message):
