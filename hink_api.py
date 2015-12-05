@@ -57,6 +57,18 @@ class HinkaliApi(remote.Service):
         except(IndexError, TypeError):
             raise endpoints.NotFoundException('Food {0} not found.'.format(request.id,))
 
+    @endpoints.method(ID_RESOURCE, hink_api_messages.FoodStopCollection,
+                      path='food/places/{id}', http_method='GET',
+                      name='food.getFoodPlaces')
+    def get_food_place(self, request):
+        try:
+            food =  models.Food.get_by_id(request.id)
+            entities = models.FoodStop.query(models.FoodStop.food==food.key)
+            places = [entity.to_message() for entity in entities]
+            return hink_api_messages.FoodStopCollection(items=places)
+        except(IndexError, TypeError, AttributeError):
+            raise endpoints.NotFoundException('Place {0} not found.'.format(request.id))
+
     @endpoints.method(ID_RESOURCE, message_types.VoidMessage,
                      path='food/delete/{id}', http_method='POST',
                      name='food.deleteFood')
