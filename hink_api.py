@@ -125,7 +125,8 @@ class HinkaliApi(remote.Service):
         try:
             place = models.Place.get_by_id(request.id)
             foods = models.FoodStop.query(models.FoodStop.place==place.key)
-            [entity.key.delete() for entity in foods]
+            for entity in foods:
+                entity.key.delete() 
             place.key.delete()
             return message_types.VoidMessage()
         except(AttributeError):
