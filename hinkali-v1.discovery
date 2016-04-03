@@ -1,0 +1,467 @@
+{
+ "kind": "discovery#restDescription",
+ "etag": "\"u_zXkMELIlX4ktyNbM2XKD4vK8E/w9SxixFX9t1yhqyzXO_Ba0jzv14\"",
+ "discoveryVersion": "v1",
+ "id": "hinkali:v1",
+ "name": "hinkali",
+ "version": "v1",
+ "description": "Hinkali API v1.",
+ "icons": {
+  "x16": "http://www.google.com/images/icons/product/search-16.gif",
+  "x32": "http://www.google.com/images/icons/product/search-32.gif"
+ },
+ "protocol": "rest",
+ "baseUrl": "https://hinkapp.appspot.com/_ah/api/hinkali/v1/",
+ "basePath": "/_ah/api/hinkali/v1/",
+ "rootUrl": "https://hinkapp.appspot.com/_ah/api/",
+ "servicePath": "hinkali/v1/",
+ "batchPath": "batch",
+ "parameters": {
+  "alt": {
+   "type": "string",
+   "description": "Data format for the response.",
+   "default": "json",
+   "enum": [
+    "json"
+   ],
+   "enumDescriptions": [
+    "Responses with Content-Type of application/json"
+   ],
+   "location": "query"
+  },
+  "fields": {
+   "type": "string",
+   "description": "Selector specifying which fields to include in a partial response.",
+   "location": "query"
+  },
+  "key": {
+   "type": "string",
+   "description": "API key. Your API key identifies your project and provides you with API access, quota, and reports. Required unless you provide an OAuth 2.0 token.",
+   "location": "query"
+  },
+  "oauth_token": {
+   "type": "string",
+   "description": "OAuth 2.0 token for the current user.",
+   "location": "query"
+  },
+  "prettyPrint": {
+   "type": "boolean",
+   "description": "Returns response with indentations and line breaks.",
+   "default": "true",
+   "location": "query"
+  },
+  "quotaUser": {
+   "type": "string",
+   "description": "Available to use for quota purposes for server-side applications. Can be any arbitrary string assigned to a user, but should not exceed 40 characters. Overrides userIp if both are provided.",
+   "location": "query"
+  },
+  "userIp": {
+   "type": "string",
+   "description": "IP address of the site where the request originates. Use this if you want to enforce per-user limits.",
+   "location": "query"
+  }
+ },
+ "auth": {
+  "oauth2": {
+   "scopes": {
+    "https://www.googleapis.com/auth/userinfo.email": {
+     "description": "View your email address"
+    }
+   }
+  }
+ },
+ "schemas": {
+  "HinkApiMessagesFood": {
+   "id": "HinkApiMessagesFood",
+   "type": "object",
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "HinkApiMessagesFoodCollection": {
+   "id": "HinkApiMessagesFoodCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "HinkApiMessagesFood"
+     }
+    }
+   }
+  },
+  "HinkApiMessagesFoodRequest": {
+   "id": "HinkApiMessagesFoodRequest",
+   "type": "object",
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    }
+   }
+  },
+  "HinkApiMessagesFoodStop": {
+   "id": "HinkApiMessagesFoodStop",
+   "type": "object",
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "food": {
+     "$ref": "HinkApiMessagesFood"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "place": {
+     "$ref": "HinkApiMessagesPlace"
+    },
+    "stars": {
+     "type": "string",
+     "format": "int64"
+    }
+   }
+  },
+  "HinkApiMessagesFoodStopCollection": {
+   "id": "HinkApiMessagesFoodStopCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "HinkApiMessagesFoodStop"
+     }
+    }
+   }
+  },
+  "HinkApiMessagesFoodStopRequest": {
+   "id": "HinkApiMessagesFoodStopRequest",
+   "type": "object",
+   "properties": {
+    "description": {
+     "type": "string"
+    },
+    "food_id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "place_id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "stars": {
+     "type": "string",
+     "format": "int64"
+    }
+   }
+  },
+  "HinkApiMessagesPlace": {
+   "id": "HinkApiMessagesPlace",
+   "type": "object",
+   "properties": {
+    "address": {
+     "type": "string"
+    },
+    "cost": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "id": {
+     "type": "string",
+     "format": "int64"
+    },
+    "locationLat": {
+     "type": "string"
+    },
+    "locationLon": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "phone": {
+     "type": "string"
+    }
+   }
+  },
+  "HinkApiMessagesPlaceCollection": {
+   "id": "HinkApiMessagesPlaceCollection",
+   "type": "object",
+   "properties": {
+    "items": {
+     "type": "array",
+     "items": {
+      "$ref": "HinkApiMessagesPlace"
+     }
+    }
+   }
+  },
+  "HinkApiMessagesPlaceRequest": {
+   "id": "HinkApiMessagesPlaceRequest",
+   "type": "object",
+   "properties": {
+    "address": {
+     "type": "string"
+    },
+    "cost": {
+     "type": "string"
+    },
+    "description": {
+     "type": "string"
+    },
+    "locationLat": {
+     "type": "string"
+    },
+    "locationLon": {
+     "type": "string"
+    },
+    "name": {
+     "type": "string"
+    },
+    "phone": {
+     "type": "string"
+    }
+   }
+  }
+ },
+ "resources": {
+  "food": {
+   "methods": {
+    "addFood": {
+     "id": "hinkali.food.addFood",
+     "path": "food",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "HinkApiMessagesFoodRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "HinkApiMessagesFood"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "deleteFood": {
+     "id": "hinkali.food.deleteFood",
+     "path": "food/delete/{id}",
+     "httpMethod": "POST",
+     "parameters": {
+      "id": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "deleteFoodStop": {
+     "id": "hinkali.food.deleteFoodStop",
+     "path": "place/food/delete/{id}",
+     "httpMethod": "POST",
+     "parameters": {
+      "id": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "getFood": {
+     "id": "hinkali.food.getFood",
+     "path": "food/{id}",
+     "httpMethod": "GET",
+     "parameters": {
+      "id": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "HinkApiMessagesFood"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "getFoodPlaces": {
+     "id": "hinkali.food.getFoodPlaces",
+     "path": "food/places/{id}",
+     "httpMethod": "GET",
+     "parameters": {
+      "id": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "HinkApiMessagesFoodStopCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "listFood": {
+     "id": "hinkali.food.listFood",
+     "path": "food",
+     "httpMethod": "GET",
+     "response": {
+      "$ref": "HinkApiMessagesFoodCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "foodstop": {
+   "methods": {
+    "addFoodStop": {
+     "id": "hinkali.foodstop.addFoodStop",
+     "path": "foodstop",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "HinkApiMessagesFoodStopRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "HinkApiMessagesFoodStop"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  },
+  "place": {
+   "methods": {
+    "addPlace": {
+     "id": "hinkali.place.addPlace",
+     "path": "place",
+     "httpMethod": "POST",
+     "request": {
+      "$ref": "HinkApiMessagesPlaceRequest",
+      "parameterName": "resource"
+     },
+     "response": {
+      "$ref": "HinkApiMessagesPlace"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "deletePlace": {
+     "id": "hinkali.place.deletePlace",
+     "path": "place/delete/{id}",
+     "httpMethod": "POST",
+     "parameters": {
+      "id": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "getPlace": {
+     "id": "hinkali.place.getPlace",
+     "path": "place/{id}",
+     "httpMethod": "GET",
+     "parameters": {
+      "id": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "HinkApiMessagesPlace"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "getPlaceFood": {
+     "id": "hinkali.place.getPlaceFood",
+     "path": "place/food/{id}",
+     "httpMethod": "GET",
+     "parameters": {
+      "id": {
+       "type": "integer",
+       "required": true,
+       "format": "int32",
+       "location": "path"
+      }
+     },
+     "parameterOrder": [
+      "id"
+     ],
+     "response": {
+      "$ref": "HinkApiMessagesFoodStopCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    },
+    "listPlaces": {
+     "id": "hinkali.place.listPlaces",
+     "path": "place",
+     "httpMethod": "GET",
+     "response": {
+      "$ref": "HinkApiMessagesPlaceCollection"
+     },
+     "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+     ]
+    }
+   }
+  }
+ }
+}
